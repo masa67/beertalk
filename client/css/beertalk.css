@@ -1,0 +1,51 @@
+
+#button-beer-talk {
+    margin-top: 20px;
+}
+
+.bt-alert {
+    color: red;
+}
+
+.note {
+    background-color: #5cb85c;;
+    border: 1px solid #3e8f3e;
+    border-radius: 6px;
+    color: white;
+    margin-top: 10px;
+    padding: 20px;
+}
+
+.invalid-cred {
+    margin-bottom: 15px;
+}
+
+.login {
+    margin-top: 10px;
+}
+
+.publish-ok {
+    background-color: #5cb85c;
+    border: 1px solid #3e8f3e;
+    border-radius: 6px;
+    color: white;
+    margin-bottom: 20px;
+    padding: 20px;
+}
+
+.publish-nok {
+    background-color: #d9534f;
+    border: 1px solid #b92c28;
+    border-radius: 6px;
+    color: white;
+    margin-bottom: 20px;
+    padding: 20px;
+}
+
+.register {
+    margin-top: 10px;
+}
+
+.submit-login-form {
+    margin-bottom: 10px;
+}

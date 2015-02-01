@@ -1,0 +1,19 @@
+{
+  "name": "beertalk",
+  "version": "1.0.0",
+  "description": "A simple demo of a review forum.",
+  "main": "server.js",
+  "dependencies": {
+      "angular-input-match": "git://github.com/TheSharpieOne/angular-input-match.git#v1.4.0",
+      "body-parser": "",
+      "express": "",
+      "express-session": ""
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "Matti Sangi",
+  "license": "MIT"
+}

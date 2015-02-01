@@ -1,0 +1,25 @@
+{
+  "name": "beertalk",
+  "version": "1.0.0",
+  "description": "A simple demo of a review forum.",
+  "moduleType": [
+    "node"
+  ],
+  "authors": [
+    "Matti Sangi"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-bootstrap": "",
+    "angular-spinner": "0.6.1",
+    "angularjs-utilities": "git://github.com/realcrowd/angularjs-utilities.git#~0.0.9"
+  }
+}

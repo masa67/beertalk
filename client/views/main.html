@@ -1,0 +1,212 @@
+<div class="navbar navbar-default navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="/">BeerTalk</a>
+        </div>
+        <div class="">
+            <ul class="nav navbar-nav navbar-right">
+                <li ng-show="!username">
+                    <a href="/login">Login</a>
+                </li>
+                <li ng-show="username">
+                    <a href="">{{username}}</a>
+                </li>
+                <li ng-show="username">
+                    <a href="" ng-click="clickLogout()">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div id="content" class="container">
+    <div class="jumbotron row">
+        <h1>Welcome to BeerTalk!</h1>
+        <p>Your beer is my beer.</p>
+        <p>Review your beer and get inspired by other people's comments on beers they have tasted.</p>
+    </div>
+    <div class="row">
+        <div class="col-sm-6">
+            <fieldset>
+                <legend>Add Review</legend>
+                <div ng-show="!username">To create your own reviews, you need to log in first.</div>
+                <div ng-show="showPublishStatus">
+                    <div class="publish-ok" ng-show="publishOk">Your review was published successfully. Thanks!</div>
+                    <div class="publish-nok" ng-show="!publishOk">
+                        <p>Could not publish your review due to a system issue.</p>
+                        <p>Have a beer and try again later.</p>
+                    </div>
+                </div>
+                <div ng-show="username">
+                    <p><span class="glyphicon glyphicon-star"></span> = the field is mandatory.</p>
+                    <form name="ReviewForm"
+                          ng-click="clickReviewForm()"
+                          rc-submit="clickReviewPublish()"
+                          novalidate>
+                        <div class="form-group"
+                             ng-class="{ 'has-error': rc.ReviewForm.needsAttention(ReviewForm.BeerType)}" >
+                            <label for="BeerType">Beer Type <span class="glyphicon glyphicon-star"></span></label>
+                            <select class="form-control"
+                                    name="BeerType"
+                                    ng-model="models.beerType"
+                                    ng-options="beerType for beerType in beerTypes"
+                                    required>
+                                <option value="">{{BEER_TYPE_DEFAULT}}</option>
+                            </select>
+                            <span ng-show="rc.ReviewForm.needsAttention(ReviewForm.BeerType)">Required.</span>
+                        </div>
+                        <div class="form-group"
+                             ng-class="{ 'has-error': rc.ReviewForm.needsAttention(ReviewForm.BeerName)}">
+                            <label for="BeerName">Beer Name <span class="glyphicon glyphicon-star"></span></label>
+                            <input class="form-control"
+                                   name="BeerName"
+                                   ng-model="models.beerName"
+                                   type="text"
+                                   required/>
+                            <span class="help-block"
+                                  ng-show="rc.ReviewForm.needsAttention(ReviewForm.BeerName)">Required.</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="Location">Location of the Sinful Pleasure (Country, City, Bar)</label>
+                            <input class="form-control"
+                                   name="Location"
+                                   ng-model="models.location"
+                                   type="text"/>
+                        </div>
+                        <div class="form-group"
+                             ng-class="{ 'has-error': rc.ReviewForm.needsAttention(ReviewForm.BeerSpeech)}">
+                            <label for="BeerSpeech">Your Free Speech about the Product <span
+                                    class="glyphicon glyphicon-star"></span></label>
+                            <textarea class="form-control"
+                                      name="BeerSpeech"
+                                      ng-model="models.speech"
+                                      required/>
+                            <span class="help-block"
+                                  ng-show="rc.ReviewForm.needsAttention(ReviewForm.BeerSpeech)">Required.</span>
+                        </div>
+                        <input class="submit-review-form btn btn-primary"
+                               ng-disabled="ajaxOn"
+                               name="Submit"
+                               type="submit"
+                               value="Publish">
+                        <div><span us-spinner spinner-key="spinner-1"></span></div>
+                    </form>
+                </div>
+            </fieldset>
+        </div>
+        <div class="col-sm-6">
+            <div class="note">
+                <p><strong>NOTE:</strong></p>
+                <p>This is a demo version.</p>
+                <p>Nothing is stored permanently, so please go ahead and just edit the content freely.</p>
+                <p>The server restart will re-initialize everything (including deletion of your credentials).</p>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col-xs-12">
+            <h2>What the Other Reader Has Said...</h2>
+            <div ng-show="!models.reviews.length">No reviews. Time to be active...</div>
+            <div ng-show="models.reviews.length">
+                <table ng-table class="table">
+                    <tr ng-repeat="review in models.reviews">
+                        <form name="ReviewTableForm" novalidate>
+                            <td data-title="'Beer Type'">
+                                <span ng-if="!review.$edit">{{review.type}}</span>
+                                <div class="form-group" ng-if="review.$edit">
+                                    <select class="form-control"
+                                            ng-model="review.type"
+                                            ng-options="beerType for beerType in beerTypes"></select>
+                                </div>
+                            </td>
+                            <td data-title="'Beer Name'">
+                                <span ng-if="!review.$edit">{{review.name}}</span>
+                                <div class="form-group"
+                                     ng-if="review.$edit">
+                                    <input class="form-control"
+                                        name="BeerName"
+                                        ng-model="review.name"
+                                        type="text"
+                                        required/>
+                                </div>
+                            </td>
+                            <td data-title="'Reviewer'">{{review.reviewer}}</td>
+                            <td data-title="'Location'">
+                                <span ng-if="!review.$edit">{{review.location}}</span>
+                                <div class="form-group"
+                                     ng-if="review.$edit">
+                                    <input class="form-control"
+                                           ng-model="review.location"
+                                           type="text"/>
+                                 </div>
+                            </td>
+                            <td data-title="'Speech'">
+                                <span ng-if="!review.$edit">{{review.speech}}</span>
+                                <div class="form-group"
+                                     ng-if="review.$edit">
+                                    <textarea class="form-control"
+                                           name="Speech"
+                                           ng-model="review.speech"
+                                           required/>
+                                </div>
+                            </td>
+                            <td data-title="'Delete'">
+                                <div ng-if="review.reviewer === username">
+                                    <a class="btn btn-primary btn-xs"
+                                       href=""
+                                       ng-click="clickReviewDelete(review)">Delete</a>
+                                </div>
+                            </td>
+                            <div>
+                                <script type="text/ng-template" id="deleteModalContent.html">
+                                    <div class="modal-header">
+                                        <h3 class="modal-title">
+                                            Deleting item. Are you sure?
+                                        </h3>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button class="btn btn-primary" ng-click="ok()">Ok</button>
+                                        <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+                                    </div>
+                                </script>
+                            </div>
+                            <td data-title="'Update'">
+                                <div ng-if="review.reviewer === username">
+                                    <a class="btn btn-primary btn-xs"
+                                       href=""
+                                       ng-click="review.$edit = true"
+                                       ng-if="!review.$edit">Edit</a>
+                                    <input class="btn btn-primary btn-xs"
+                                           name="Submit"
+                                           ng-click="clickReviewUpdate(review)"
+                                           ng-disabled="ajaxOn"
+                                           ng-if="review.$edit"
+                                           type="submit"
+                                           value="Save"/>
+                                </div>
+                            </td>
+                            <div>
+                                <script type="text/ng-template" id="updateModalContent.html">
+                                    <div class="modal-header">
+                                        <h3 class="modal-title">
+                                            <span ng-if="cause === 'invalid_data'">Invalid data</span>
+                                            <span ng-if="cause === 'update_failed'">Update failed</span>
+                                        </h3>
+                                    </div>
+                                    <div class="modal-body">
+                                        <span ng-if="cause === 'invalid_data'">Beer Name and Speech are required.</span>
+                                        <span ng-if="cause === 'update_failed'">Update to server failed. Try again later.</span>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button class="btn btn-primary" ng-click="ok()">Ok</button>
+                                    </div>
+                                </script>
+                            </div>
+                        </form>
+                    </tr>
+                </table>
+                <div><span us-spinner spinner-key="spinner-2"></span></div>
+            </div>
+        </div>
+    </div>
+</div>

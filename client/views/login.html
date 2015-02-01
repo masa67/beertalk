@@ -1,0 +1,136 @@
+<div class="navbar navbar-default navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="/">BeerTalk</a>
+        </div>
+        <div class="">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="/login">Login</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div id="content" class="container">
+    <div class="row">
+        <div class="col-sm-3 col-md-4">
+        </div>
+        <div class="col-sm-6 col-md-4">
+            <div class="note">
+                <p><strong>NOTE:</strong></p>
+                <p>This is a demo version.</p>
+                <p>If you do not want to create your own credentials, just use the following:<p>
+                <ul>
+                    <li>username: u</li>
+                    <li>password: u</li>
+                </ul>
+            </div>
+            <fieldset class='login' ng-show="!doReg">
+                <legend>Login</legend>
+                <form rc-submit="clickLogin()" name="LoginForm" novalidate>
+                    <div class="form-group"
+                         ng-class="{ 'has-error': rc.LoginForm.needsAttention(LoginForm.Username)}">
+                        <label for="Username">Username</label>
+                        <input class="form-control"
+                               name="Username"
+                               ng-model="models.username"
+                               type="text"
+                               required>
+                        <span class="help-block"
+                              ng-show="rc.LoginForm.needsAttention(LoginForm.Username)">Required.</span>
+                    </div>
+                    <div class="form-group"
+                         ng-class="{ 'has-error': rc.LoginForm.needsAttention(LoginForm.Password)}">
+                        <label for="Password">Password</label>
+                        <input class="form-control"
+                               name="Password"
+                               ng-model="models.password"
+                               type="password"
+                               required>
+                        <span class="help-block"
+                              ng-show="rc.LoginForm.needsAttention(LoginForm.Password)">Required.</span>
+                    </div>
+                    <div class="bt-alert invalid-cred"
+                         ng-show="invalidCred">Invalid Username or Password.</div>
+                    <div><span us-spinner spinner-key="spinner-1"></span></div>
+                    <button class="submit-login-form btn btn-primary"
+                           name="Submit"
+                           ng-disabled="ajaxOn"
+                           type="submit">Login</button>
+                </form>
+                <div><a href="" ng-click="clickRegisterNow()">Register now</a></div>
+            </fieldset>
+            <fieldset class="register" ng-show="doReg">
+                <legend>Register</legend>
+                <form rc-submit="clickRegister()" name="RegisterForm" novalidate>
+                    <p>All fields are mandatory.</p>
+                    <div class="form-group"
+                         ng-class="{ 'has-error': rc.RegisterForm.needsAttention(RegisterForm.Username)}">
+                        <label for="Username">Username</label>
+                        <input class="form-control"
+                               name="Username"
+                               ng-model="models.username"
+                               type="text"
+                               required>
+                        <span class="help-block"
+                              ng-show="rc.RegisterForm.needsAttention(RegisterForm.Username)">Required.</span>
+                    </div>
+                    <div class="form-group"
+                         ng-class="{ 'has-error': rc.RegisterForm.needsAttention(RegisterForm.Email)}">
+                        <label for="Email">E-mail address</label>
+                        <input class="form-control"
+                               name="Email"
+                               ng-model="models.email"
+                               type="email"
+                               required>
+                        <span ng-show="rc.RegisterForm.needsAttention(RegisterForm.Email)">
+                            <span class="help-block"
+                                  ng-show="RegisterForm.Email.$error.required">Required.</span>
+                            <span class="help-block"
+                                  ng-show="RegisterForm.Email.$error.email">Not a valid e-mail address.</span>
+                        </span>
+                    </div>
+                    <div class="form-group"
+                         ng-class="{ 'has-error': rc.RegisterForm.needsAttention(RegisterForm.Password)}">
+                        <label for="Password">Password</label>
+                        <input class="form-control"
+                               name="Password"
+                               ng-model="models.password"
+                               type="password"
+                               required>
+                        <span class="help-block"
+                              ng-show="rc.RegisterForm.needsAttention(RegisterForm.Password)">Required.</span>
+                    </div>
+                    <div class="form-group"
+                         ng-class="{ 'has-error': rc.RegisterForm.needsAttention(RegisterForm.RetypePassword)}">
+                        <label for="RetypePassword">Retype Password</label>
+                        <input class="form-control"
+                               match="models.password"
+                               name="RetypePassword"
+                               ng-model="models.retypePassword"
+                               type="password"
+                               required>
+                        <span ng-show="rc.RegisterForm.needsAttention(RegisterForm.RetypePassword)">
+                            <span class="help-block"
+                                  ng-show="RegisterForm.RetypePassword.$error.required">Required.</span>
+                            <span class="help-block"
+                                  ng-show="RegisterForm.RetypePassword.$error.match && !RegisterForm.RetypePassword.$error.required">Passwords do not
+                                match.</span>
+                        </span>
+                    </div>
+                    <div class="bt-alert invalid-cred"
+                         ng-show="usernameReserved">Username is already reserved.</div>
+                    <div><span us-spinner spinner-key="spinner-1"></span></div>
+                    <button class="submit-login-form btn btn-primary"
+                            name="Submit"
+                            ng-disabled="ajaxOn"
+                            type="submit">Register</button>
+
+                </form>
+            </fieldset>
+        </div>
+        <div class="col-sm-3 col-md-4">
+        </div>
+    </div>
+</div>
