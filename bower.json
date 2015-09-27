@@ -20,6 +20,10 @@
   "dependencies": {
     "angular-bootstrap": "",
     "angular-spinner": "0.6.1",
-    "angularjs-utilities": "git://github.com/realcrowd/angularjs-utilities.git#~0.0.9"
+    "angularjs-utilities": "git://github.com/realcrowd/angularjs-utilities.git#~0.0.9",
+    "ng-table": ""
+  },
+  "resolutions": {
+    "angular": "^1.2"
   }
 }
